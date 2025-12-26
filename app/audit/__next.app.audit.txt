@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[69591,["/kasparro-frontend-Ekila-Teja/_next/static/chunks/d7e44dcc25b5aa9b.js","/kasparro-frontend-Ekila-Teja/_next/static/chunks/83bc6489a5b2565d.js"],"default"]
 3:I[77905,["/kasparro-frontend-Ekila-Teja/_next/static/chunks/d7e44dcc25b5aa9b.js","/kasparro-frontend-Ekila-Teja/_next/static/chunks/83bc6489a5b2565d.js"],"default"]
-0:{"buildId":"lnUXwZTJKCVgqrFmWV9Ve","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"k7mMim10jGYhfPv3Z0duP","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
