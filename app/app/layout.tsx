@@ -5,7 +5,7 @@ import { Sidebar } from "@/src/components/layout/sidebar";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { Logo } from "@/src/components/ui/logo";
+
 
 export default function AppLayout({
     children,
@@ -26,7 +26,6 @@ export default function AppLayout({
             {/* Mobile Header */}
             <div className="md:hidden bg-[#0B1120] text-white p-4 flex justify-between items-center border-b border-gray-800 shrink-0 z-50">
                 <div className="flex items-center space-x-3">
-                    <Logo className="w-8 h-8" />
                     <span className="font-bold text-xl">Kasparro</span>
                 </div>
                 <button

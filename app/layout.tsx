@@ -5,6 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "logo.png",
+  },
   title: "Kasparro - AI-Native SEO & Brand Intelligence",
   description: "Optimize your brand for ChatGPT, Gemini, Perplexity, and the AI-first search era",
 };

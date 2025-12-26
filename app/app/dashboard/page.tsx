@@ -27,7 +27,7 @@ function DashboardContent() {
   const currentBrand = brands.find(b => b.id === brandId) || brands.find(b => b.id === 'brand-2');
 
   const getTrendIcon = (trend: 'up' | 'down' | 'stable' | 'neutral') => {
-    if (trend === 'up') return <TrendingUp size={16} className="text-[brand]" />;
+    if (trend === 'up') return <TrendingUp size={16} className="text-[#C4A496]" />;
     if (trend === 'down') return <TrendingDown size={16} className="text-red-400" />;
     return <Minus size={16} className="text-gray-400" />;
   };
@@ -38,21 +38,27 @@ function DashboardContent() {
       max: snapshot.aiVisibilityScore.maxValue,
       label: "AI Visibility Score",
       trend: snapshot.aiVisibilityScore.trend,
-      barColor: snapshot.aiVisibilityScore.level === 'high' ? "bg-[brand]" : snapshot.aiVisibilityScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: "bg-orange-300",
+      iconColor: "text-violet-600",
+      iconBg: "bg-violet-50"
     },
     trust: {
       score: snapshot.trustEEATScore.value,
       max: snapshot.trustEEATScore.maxValue,
       label: "Trust & E-E-A-T Score",
       trend: snapshot.trustEEATScore.trend,
-      barColor: snapshot.trustEEATScore.level === 'high' ? "bg-[brand]" : snapshot.trustEEATScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: "bg-emerald-300",
+      iconColor: "text-emerald-600",
+      iconBg: "bg-emerald-50"
     },
     coverage: {
       score: snapshot.nonBrandedKeywordCoverage.value,
       max: snapshot.nonBrandedKeywordCoverage.maxValue,
       label: "Non-Branded Coverage",
       trend: snapshot.nonBrandedKeywordCoverage.trend,
-      barColor: snapshot.nonBrandedKeywordCoverage.level === 'high' ? "bg-[brand]" : snapshot.nonBrandedKeywordCoverage.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: "bg-violet-300",
+      iconColor: "text-blue-600",
+      iconBg: "bg-blue-50"
     }
   };
 
@@ -69,7 +75,7 @@ function DashboardContent() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
+              <div className={`p-2 rounded-lg ${metrics.aiVisibility.iconBg} ${metrics.aiVisibility.iconColor}`}>
                 <Eye size={20} />
               </div>
               {getTrendIcon(metrics.aiVisibility.trend as 'up' | 'down' | 'stable')}
@@ -99,7 +105,7 @@ function DashboardContent() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
+              <div className={`p-2 rounded-lg ${metrics.trust.iconBg} ${metrics.trust.iconColor}`}>
                 <ShieldCheck size={20} />
               </div>
               {getTrendIcon(metrics.trust.trend as 'up' | 'down' | 'stable')}
@@ -129,7 +135,7 @@ function DashboardContent() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
+              <div className={`p-2 rounded-lg ${metrics.coverage.iconBg} ${metrics.coverage.iconColor}`}>
                 <Search size={20} />
               </div>
               {getTrendIcon(metrics.coverage.trend as 'up' | 'down' | 'stable')}
