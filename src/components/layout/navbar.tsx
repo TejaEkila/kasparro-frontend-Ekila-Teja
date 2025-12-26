@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
+import { Logo } from "@/src/components/ui/logo";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
@@ -31,8 +32,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href={isApp ? "/app/dashboard" : "/"} className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-slate-100 tracking-tight">
+          {/* Logo */}
+          <Link href={isApp ? "/app/dashboard" : "/"} className="flex items-center space-x-3 group">
+            <Logo className="w-8 h-8 group-hover:scale-105 transition-transform" />
+            <span className="text-xl font-bold text-slate-100 tracking-tight group-hover:text-white transition-colors">
               Kasparro
             </span>
           </Link>

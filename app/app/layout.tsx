@@ -5,6 +5,8 @@ import { Sidebar } from "@/src/components/layout/sidebar";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
+import { Logo } from "@/src/components/ui/logo";
+
 export default function AppLayout({
     children,
 }: {
@@ -13,7 +15,6 @@ export default function AppLayout({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
 
-    // Close mobile menu on route change
     // Close mobile menu on route change
     useEffect(() => {
         const t = setTimeout(() => setIsMobileMenuOpen(false), 0);
@@ -24,7 +25,10 @@ export default function AppLayout({
         <div className="flex h-screen bg-gray-50 flex-col md:flex-row overflow-hidden">
             {/* Mobile Header */}
             <div className="md:hidden bg-[#0B1120] text-white p-4 flex justify-between items-center border-b border-gray-800 shrink-0 z-50">
-                <span className="font-bold text-xl">Kasparro</span>
+                <div className="flex items-center space-x-3">
+                    <Logo className="w-8 h-8" />
+                    <span className="font-bold text-xl">Kasparro</span>
+                </div>
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors"
