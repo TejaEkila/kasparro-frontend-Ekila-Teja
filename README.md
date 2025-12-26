@@ -2,7 +2,7 @@
 
 This repository contains the frontend implementation for Kasparro, an AI-native SEO platform. The solution is built to demonstrate system thinking, scalable architecture, and engineering discipline.
 
-## 🏗 System Architecture
+## System Architecture
 
 The application is structured to handle two distinct product surfaces (Marketing Website + Product Dashboard) within a single Next.js codebase.
 
