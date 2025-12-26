@@ -572,7 +572,7 @@ export const landingPageData = {
       },
       {
         icon: "ShieldCheck",
-        title: "EEAT as Code",
+        title: "E-E-A-T as Code",
         description: "LLMs prioritize authoritative sources to avoid hallucinations. We quantify your brand's Entity Authority in the Knowledge Graph, ensuring your content meets the strict citation thresholds of models like GPT-4 and Claude 3."
       },
       {
