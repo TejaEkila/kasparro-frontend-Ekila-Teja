@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/src/components/ui/card";
 import { motion } from "framer-motion";
 import {
   Eye,
@@ -14,8 +14,9 @@ import {
   Minus
 } from "lucide-react";
 import { dashboardSnapshots, brands } from "@/src/data/mockData";
+import { Suspense } from "react";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams();
   const brandId = searchParams.get('brandId') || 'brand-2';
 
@@ -26,7 +27,7 @@ export default function DashboardPage() {
   const currentBrand = brands.find(b => b.id === brandId) || brands.find(b => b.id === 'brand-2');
 
   const getTrendIcon = (trend: 'up' | 'down' | 'stable' | 'neutral') => {
-    if (trend === 'up') return <TrendingUp size={16} className="text-[#C4A496]" />;
+    if (trend === 'up') return <TrendingUp size={16} className="text-[brand]" />;
     if (trend === 'down') return <TrendingDown size={16} className="text-red-400" />;
     return <Minus size={16} className="text-gray-400" />;
   };
@@ -37,21 +38,21 @@ export default function DashboardPage() {
       max: snapshot.aiVisibilityScore.maxValue,
       label: "AI Visibility Score",
       trend: snapshot.aiVisibilityScore.trend,
-      barColor: snapshot.aiVisibilityScore.level === 'high' ? "bg-[#C4A496]" : snapshot.aiVisibilityScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: snapshot.aiVisibilityScore.level === 'high' ? "bg-[brand]" : snapshot.aiVisibilityScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
     },
     trust: {
       score: snapshot.trustEEATScore.value,
       max: snapshot.trustEEATScore.maxValue,
       label: "Trust & E-E-A-T Score",
       trend: snapshot.trustEEATScore.trend,
-      barColor: snapshot.trustEEATScore.level === 'high' ? "bg-[#C4A496]" : snapshot.trustEEATScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: snapshot.trustEEATScore.level === 'high' ? "bg-[brand]" : snapshot.trustEEATScore.level === 'medium' ? "bg-orange-500" : "bg-red-500"
     },
     coverage: {
       score: snapshot.nonBrandedKeywordCoverage.value,
       max: snapshot.nonBrandedKeywordCoverage.maxValue,
       label: "Non-Branded Coverage",
       trend: snapshot.nonBrandedKeywordCoverage.trend,
-      barColor: snapshot.nonBrandedKeywordCoverage.level === 'high' ? "bg-[#C4A496]" : snapshot.nonBrandedKeywordCoverage.level === 'medium' ? "bg-orange-500" : "bg-red-500"
+      barColor: snapshot.nonBrandedKeywordCoverage.level === 'high' ? "bg-[brand]" : snapshot.nonBrandedKeywordCoverage.level === 'medium' ? "bg-orange-500" : "bg-red-500"
     }
   };
 
@@ -68,7 +69,7 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[#C4A496]">
+              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
                 <Eye size={20} />
               </div>
               {getTrendIcon(metrics.aiVisibility.trend as 'up' | 'down' | 'stable')}
@@ -98,7 +99,7 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[#C4A496]">
+              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
                 <ShieldCheck size={20} />
               </div>
               {getTrendIcon(metrics.trust.trend as 'up' | 'down' | 'stable')}
@@ -128,7 +129,7 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[#C4A496]">
+              <div className="p-2 bg-[#FAF7F6] rounded-lg text-[brand]">
                 <Search size={20} />
               </div>
               {getTrendIcon(metrics.coverage.trend as 'up' | 'down' | 'stable')}
@@ -175,7 +176,7 @@ export default function DashboardPage() {
         <Card className="bg-gray-50/50 border-0">
           <CardContent className="p-6">
             <div className="flex items-center space-x-2 mb-4">
-              <Clock className="text-[#C4A496]" size={20} />
+              <Clock className="text-[brand]" size={20} />
               <span className="font-semibold text-gray-900">Last Audit</span>
             </div>
             <div className="mb-1">
@@ -185,5 +186,13 @@ export default function DashboardPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }

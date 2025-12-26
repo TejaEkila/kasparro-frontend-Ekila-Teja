@@ -13,6 +13,11 @@
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
+  /* Kasparro Brand Colors */
+  --color-brand: #C4A496;
+  --color-brand-light: #E8DFDB;
+  --color-brand-dark: #A88B7D;
+
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
 

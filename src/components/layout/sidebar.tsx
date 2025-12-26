@@ -3,33 +3,49 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import {
     LayoutDashboard,
     ClipboardCheck,
     Network,
     Settings,
     LogOut,
-    ChevronDown,
-    Building2
+    ChevronDown
 } from "lucide-react";
 import { brands } from "@/src/data/mockData";
 
-export function Sidebar() {
+// Define navItems with explicit type inference or adding optional property handling
+const navItems = [
+    { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/app/audit", label: "Audit", icon: ClipboardCheck },
+    { href: "/app/architecture", label: "Architecture", icon: Network },
+];
+
+function SidebarContent() {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [isOpen, setIsOpen] = useState(false);
+    const [activeBrand, setActiveBrand] = useState(brands[0]);
+    const [isBrandOpen, setIsBrandOpen] = useState(false);
     const [showComingSoon, setShowComingSoon] = useState(false);
 
-    // Default to 'brand-2' (CloudPeak) if no param is present
-    const currentBrandId = searchParams.get('brandId') || 'brand-2';
-    const selectedBrand = brands.find(b => b.id === currentBrandId) || brands[1];
+    // Sync brand from URL or default
+    useEffect(() => {
+        const brandId = searchParams.get("brandId");
+        if (brandId) {
+            const found = brands.find(b => b.id === brandId);
+            if (found) setActiveBrand(found);
+        } else {
+            // If no brandId in URL, set the default brand and update URL
+            router.replace(`${pathname}?brandId=${brands[0].id}`);
+        }
+    }, [searchParams, pathname, router]);
 
-    const handleBrandSelect = (brandId: string) => {
-        setIsOpen(false);
-        // Update URL with new brandId, keeping existing path
-        router.push(`${pathname}?brandId=${brandId}`);
+    const handlebrandSelect = (brand: typeof brands[0]) => {
+        setActiveBrand(brand);
+        setIsBrandOpen(false);
+        // Clean URL update
+        router.push(`${pathname}?brandId=${brand.id}`);
     };
 
     const handleSettingsClick = () => {
@@ -37,55 +53,42 @@ export function Sidebar() {
         setTimeout(() => setShowComingSoon(false), 2000);
     };
 
-    const links = [
-        { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { href: "/app/audit", label: "Audit", icon: ClipboardCheck },
-        { href: "/app/architecture", label: "Architecture", icon: Network },
-    ];
-
     return (
-        <div className="w-64 bg-[#0B1120] text-gray-300 flex flex-col h-screen border-r border-gray-800">
-            {/* Logo Area */}
-            <div className="p-6">
-                <div className="flex items-center space-x-2 text-white font-bold text-xl">
-                    <span>Kasparro</span>
-                </div>
-            </div>
-
+        <aside className="w-64 bg-[#0B1120] border-r border-gray-800 flex flex-col h-full text-slate-300 relative">
             {/* Brand Selector */}
-            <div className="px-4 mb-6 relative">
+            <div className="p-4 border-b border-gray-800 relative">
                 <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="w-full bg-[#161F2E] hover:bg-[#1E293B] text-white p-3 rounded-lg flex items-center justify-between transition-colors border border-gray-800"
+                    onClick={() => setIsBrandOpen(!isBrandOpen)}
+                    className="w-full flex items-center justify-between p-2 rounded-lg bg-[#161F2E] hover:bg-[#1F2937] transition-all border border-gray-800 group"
                 >
-                    <div className="flex items-center space-x-3">
-                        <div className="bg-[#BFA89E]/20 p-1.5 rounded">
-                            <Building2 size={16} className="text-[#BFA89E]" />
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded bg-[brand] flex items-center justify-center text-white font-bold shadow-sm group-hover:shadow-[0_0_10px_rgba(196,164,150,0.3)] transition-shadow">
+                            {activeBrand.name.substring(0, 1)}
                         </div>
-                        <span className="text-sm font-medium">{selectedBrand.name}</span>
+                        <div className="text-left">
+                            <div className="text-sm font-semibold text-white">{activeBrand.name}</div>
+                            <div className="text-[10px] text-slate-500 uppercase tracking-wider">{activeBrand.industry}</div>
+                        </div>
                     </div>
-                    <ChevronDown size={16} className={`text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={14} className={`text-slate-500 transition-transform duration-200 ${isBrandOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Dropdown Menu (Expansion Tail) */}
-                {isOpen && (
+                {/* Dropdown */}
+                {isBrandOpen && (
                     <>
                         <div
                             className="fixed inset-0 z-40"
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => setIsBrandOpen(false)}
                         />
-                        <div className="absolute top-full left-4 right-4 mt-2 bg-white rounded-xl shadow-xl shadow-black/20 overflow-hidden z-50 py-1 animate-in fade-in zoom-in-95 duration-200">
+                        <div className="absolute top-full left-4 right-4 mt-2 bg-white rounded-xl border border-gray-200 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100">
                             {brands.map(brand => (
                                 <button
                                     key={brand.id}
-                                    onClick={() => handleBrandSelect(brand.id)}
-                                    className={`w-full text-left px-4 py-3 flex items-center space-x-3 transition-colors ${brand.id === selectedBrand.id
-                                        ? 'bg-[#C4A496] text-white'
-                                        : 'text-slate-600 hover:bg-slate-50'
-                                        }`}
+                                    onClick={() => handlebrandSelect(brand)}
+                                    className="w-full p-3 text-left hover:bg-slate-50 text-sm font-medium text-slate-700 flex items-center gap-2 border-b border-gray-100 last:border-0 transition-colors"
                                 >
-                                    <Building2 size={16} className={brand.id === selectedBrand.id ? 'text-white' : 'text-slate-400'} />
-                                    <span className="font-medium text-sm">{brand.name}</span>
+                                    <span className="w-2 h-2 rounded-full bg-[brand]"></span>
+                                    {brand.name}
                                 </button>
                             ))}
                         </div>
@@ -94,51 +97,35 @@ export function Sidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 px-4 space-y-1">
-                {links.map((link) => {
-                    const Icon = link.icon;
-                    const isActive = pathname === link.href || pathname?.startsWith(link.href);
+            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                {navItems.map((item) => {
+                    const isActive = pathname === item.href;
+                    // Provide a default or handled badge property
+                    const badge = (item as any).badge;
 
                     return (
                         <Link
-                            key={link.href}
-                            href={`${link.href}?brandId=${currentBrandId}`} // Maintain brand context
-                            className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                                ? "bg-[#C4A496] text-white"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
+                            key={item.href}
+                            href={`${item.href}?brandId=${activeBrand.id}`} // Maintain brand context
+                            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${isActive
+                                ? "bg-[brand] text-white shadow-lg shadow-[brand]/20"
+                                : "text-slate-400 hover:text-white hover:bg-white/5"
                                 }`}
                         >
-                            <Icon size={18} />
-                            <span>{link.label}</span>
+                            <item.icon size={18} className={isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300"} />
+                            {item.label}
+                            {badge && (
+                                <span className={`ml-auto text-[10px] px-1.5 py-0.5 rounded-full font-bold ${isActive ? 'bg-white/20 text-white' : 'bg-[brand]/10 text-[brand]'}`}>
+                                    {badge}
+                                </span>
+                            )}
                         </Link>
-                    );
+                    )
                 })}
             </nav>
 
             {/* Bottom Actions */}
-            <div className="p-4 border-t border-gray-800 space-y-1">
-                <div className="relative">
-                    <AnimatePresence>
-                        {showComingSoon && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                className="absolute bottom-full left-0 mb-2 w-full bg-[#C4A496] text-white px-3 py-2 rounded-lg text-xs font-bold shadow-lg text-center"
-                            >
-                                Coming Soon 🚀
-                                <div className="absolute -bottom-1 left-6 w-2 h-2 bg-[#C4A496] rotate-45" />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                    <button
-                        onClick={handleSettingsClick}
-                        className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
-                    >
-                        <Settings size={18} />
-                        <span>Settings</span>
-                    </button>
-                </div>
+            <div className="p-4 border-t border-gray-800 space-y-1 relative">
                 <Link
                     href="/"
                     className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
@@ -147,6 +134,14 @@ export function Sidebar() {
                     <span>Back to Site</span>
                 </Link>
             </div>
-        </div>
+        </aside>
+    );
+}
+
+export function Sidebar() {
+    return (
+        <Suspense fallback={<div className="w-64 bg-[#0B1120] border-r border-gray-800 h-full" />}>
+            <SidebarContent />
+        </Suspense>
     );
 }

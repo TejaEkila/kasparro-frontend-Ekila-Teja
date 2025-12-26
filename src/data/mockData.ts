@@ -566,19 +566,19 @@ export const landingPageData = {
     subtitle: "Traditional SEO focused on ranking pages. AI-SEO is about being the answer.",
     cards: [
       {
-        title: "Citation over Ranking",
-        description: "AI systems cite sources, not rank them. Your content needs to be citation-worthy.",
-        icon: "Target"
+        icon: "Target",
+        title: "RAG Optimization",
+        description: "Unlike traditional SEO which targets keyword density, AI-SEO optimizes for RAG (Retrieval-Augmented Generation) pipelines. We reverse-engineer the vector similarity thresholds used by LLMs to ensure your brand is retrieved as the definitive answer."
       },
       {
-        title: "Context is King",
-        description: "LLMs understand context deeply. Surface-level optimization no longer works.",
-        icon: "Zap"
+        icon: "ShieldCheck",
+        title: "EEAT as Code",
+        description: "LLMs prioritize authoritative sources to avoid hallucinations. We quantify your brand's Entity Authority in the Knowledge Graph, ensuring your content meets the strict citation thresholds of models like GPT-4 and Claude 3."
       },
       {
-        title: "Trust Signals Matter",
-        description: "E-E-A-T principles are now algorithmically enforced by AI systems.",
-        icon: "TrendingUp"
+        icon: "Search",
+        title: "Context Window Optimization",
+        description: "It's not just about keywords; it's about semantic density. We analyze your content's fit within the limited context window of LLMs, ensuring your brand narrative survives the summarization compression."
       }
     ]
   },

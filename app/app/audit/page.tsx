@@ -48,7 +48,7 @@ export default function AuditPage() {
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-xl text-xs text-left transition-all duration-200 group relative shrink-0 md:w-full min-w-[200px] md:min-w-0',
                   isActive
-                    ? 'bg-[#C4A496] text-white shadow-lg shadow-[#C4A496]/20'
+                    ? 'bg-[brand] text-white shadow-lg shadow-[brand]/20'
                     : 'text-slate-400 hover:text-slate-100 hover:bg-white/5'
                 )}
               >
@@ -58,7 +58,7 @@ export default function AuditPage() {
                   className={cn(
                     'ml-auto text-[10px] font-bold font-mono px-1.5 py-0.5 rounded',
                     isActive ? 'bg-white/20 text-white' :
-                      module.score.level === 'high' ? 'text-[#C4A496] bg-[#C4A496]/10' :
+                      module.score.level === 'high' ? 'text-[brand] bg-[brand]/10' :
                         module.score.level === 'medium' ? 'text-amber-400 bg-amber-400/10' :
                           'text-red-400 bg-red-400/10'
                   )}
@@ -90,11 +90,11 @@ function ModuleDetail({ module }: { module: AuditModule }) {
   const Icon = iconMap[module.icon] || Eye;
 
   // Dynamic header color based on score level
-  const scoreColorClass = module.score.level === 'high' ? 'text-[#C4A496]' : module.score.level === 'medium' ? 'text-amber-500' : 'text-red-500';
+  const scoreColorClass = module.score.level === 'high' ? 'text-[brand]' : module.score.level === 'medium' ? 'text-amber-500' : 'text-red-500';
   const scoreBgClass = module.score.level === 'high' ? 'bg-[#FAF7F6]' : module.score.level === 'medium' ? 'bg-amber-50' : 'bg-red-50';
 
   const TrendIcon = module.score.trend === 'up' ? TrendingUp : module.score.trend === 'down' ? TrendingDown : Minus;
-  const trendColor = module.score.trend === 'up' ? 'text-[#C4A496]' : module.score.trend === 'down' ? 'text-red-500' : 'text-slate-400';
+  const trendColor = module.score.trend === 'up' ? 'text-[brand]' : module.score.trend === 'down' ? 'text-red-500' : 'text-slate-400';
 
   return (
     <motion.div
@@ -208,7 +208,7 @@ function ModuleDetail({ module }: { module: AuditModule }) {
       {module.recommendations.length > 0 && (
         <section className="space-y-3">
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-[#C4A496]" />
+            <CheckCircle className="w-4 h-4 text-[brand]" />
             Recommendations
           </h2>
           <div className="grid gap-3">
