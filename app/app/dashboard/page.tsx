@@ -94,7 +94,7 @@ function DashboardContent() {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${metrics.aiVisibility.score}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className={`h-full rounded-full ${metrics.aiVisibility.barColor}`}
               />
             </div>
@@ -124,7 +124,7 @@ function DashboardContent() {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${metrics.trust.score}%` }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
                 className={`h-full rounded-full ${metrics.trust.barColor}`}
               />
             </div>
@@ -154,7 +154,7 @@ function DashboardContent() {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${metrics.coverage.score}%` }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                 className={`h-full rounded-full ${metrics.coverage.barColor}`}
               />
             </div>

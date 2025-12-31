@@ -14,9 +14,9 @@
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
   /* Kasparro Brand Colors */
-  --color-brand: #C4A496;
-  --color-brand-light: #E8DFDB;
-  --color-brand-dark: #A88B7D;
+  --color-brand: hsl(var(--brand));
+  --color-brand-light: hsl(var(--brand-light));
+  --color-brand-dark: hsl(var(--brand-dark));
 
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
@@ -42,6 +42,11 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+
+    /* Brand Colors (HSL) */
+    --brand: 25 25% 68%;
+    --brand-light: 20 20% 88%;
+    --brand-dark: 20 20% 57%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
